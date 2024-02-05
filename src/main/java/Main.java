@@ -23,7 +23,7 @@ public class Main {
           String str;
           while((str = in.readLine()) != null){
             if(str.equals("ping")){
-                out.print("+PONG\\r\\n");
+                out.print("+PONG\r\n");
                 out.flush();
             }
           }
