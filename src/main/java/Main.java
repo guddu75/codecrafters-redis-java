@@ -7,17 +7,35 @@ import java.net.Socket;
 
 public class Main {
 
+    private static String parseCommand(String str){
+        // *2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n
+        int len = 0;
+        for(int i = 21 ; i < str.length() ; i++){
+            if(str.charAt(i) >= '0' && str.charAt(i)<='9'){
+                len = len*10 + (str.charAt(i)-'0');
+            }else{
+                break;
+            }
+        }
+
+        return str.substring(26,26+len);
+
+    }
+
 
     private static void handleClient( Socket clientSocket) throws  IOException{
         PrintWriter out =  new PrintWriter(clientSocket.getOutputStream());
         BufferedReader in =  new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
         String str;
         while((str = in.readLine()) != null){
-            System.out.println(str);
-            if(str.equals("ping")){
-                out.print("+PONG\r\n");
-                out.flush();
-            }
+//            System.out.println(str);
+//            if(str.equals("ping")){
+//                out.print("+PONG\r\n");
+//                out.flush();
+//            }
+            String response = parseCommand(str);
+            out.print(response);
+            out.flush();
         }
         clientSocket.close();
     }
