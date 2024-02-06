@@ -24,7 +24,7 @@ public class Main {
         String response = null;
         int numCommands = getNum(str,1);
         if(numCommands==1){
-            response = "$4\r\nPONG\r\n";
+            response = "+PONG\r\n";
         }else if(numCommands == 2){
             int idx = str.lastIndexOf("$");
             response = str.substring(idx);
