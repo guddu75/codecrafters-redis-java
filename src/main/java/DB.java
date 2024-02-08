@@ -12,6 +12,10 @@ public class DB {
     }
 
     public String get(String key){
-        return db.get(key);
+        if(db.get(key) != null){
+            return db.get(key);
+        }else{
+            return "null";
+        }
     }
 }
