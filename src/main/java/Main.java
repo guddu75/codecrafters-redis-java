@@ -25,6 +25,12 @@ public class Main {
 //        return  res;
 //    }
 
+    private static void printArr(ArrayList<String> s){
+        for(String sp : s){
+            System.out.println(sp);
+        }
+    }
+
     private static String parseCommand(String str){
         // *2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n
         int i = 0;
@@ -73,9 +79,10 @@ public class Main {
             commands.add(c);
         }
         String response = null;
-        for(String s : commands){
-            System.out.println(s);
-        }
+//        for(String s : commands){
+//            System.out.println(s);
+//        }
+        printArr(commands);
         if(commands.get(0).toLowerCase().contentEquals("ping")){
             response = "+PONG";
         }else if(commands.get(0).toLowerCase().contentEquals("echo") ){
