@@ -76,9 +76,9 @@ public class Main {
         for(String s : commands){
             System.out.println(s);
         }
-        if(commands.get(0).contentEquals("PING")){
+        if(commands.get(0).toLowerCase().contentEquals("ping")){
             response = "+PONG";
-        }else if(commands.get(0).contentEquals("ECHO") ){
+        }else if(commands.get(0).toLowerCase().contentEquals("echo") ){
             response = commands.get(1);
         }
 
