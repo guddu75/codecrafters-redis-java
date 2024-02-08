@@ -13,6 +13,7 @@ public class Main {
         String str;
         ArrayList<String> arr = new ArrayList<>();
         int cnt = 0 ;
+        DB database = new DB();
         while((str = in.readLine()) != null){
             arr.add(str);
             if(arr.size() == 1){
@@ -25,6 +26,17 @@ public class Main {
                     out.flush();
                 }else if(cmd.toLowerCase().contentEquals("echo")){
                     String output = arr.get(4);
+                    out.printf("$%d\r\n%s\r\n",output.length(),output);
+                    out.flush();
+                }else if(cmd.toLowerCase().contentEquals("set")){
+                    String key = arr.get(4);
+                    String value = arr.get(6);
+                    database.set(key,value);
+                    out.print("OK\r\n");
+                    out.flush();
+                }else if(cmd.toLowerCase().contentEquals("get")){
+                    String key = arr.get(4);
+                    String output = database.get(key);
                     out.printf("$%d\r\n%s\r\n",output.length(),output);
                     out.flush();
                 }
@@ -59,17 +71,7 @@ public class Main {
             }
         } catch (IOException e) {
           System.out.println("IOException: " + e.getMessage());
-        } finally {
-//          try {
-//            if (clientSocket != null) {
-//              clientSocket.close();
-//            }
-//          } catch (IOException e) {
-//            System.out.println("IOException: " + e.getMessage());
-//          }
         }
-//      System.out.println("Here i am");
   }
-
 
 }
