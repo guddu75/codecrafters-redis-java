@@ -7,101 +7,31 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
-
-
-//    private static int numCommands(String str){
-//
-//    }
-//
-//    private static int getNum(String str , int idx){
-//        int res = 0;
-//        for(int i = idx ; i < str.length() ; i++){
-//            if(str.charAt(i) >= '0' && str.charAt(i)<='9'){
-//                res = (res*10) + (str.charAt(i)-'0');
-//            }else{
-//                break;
-//            }
-//        }
-//        return  res;
-//    }
-
-    private static void printArr(ArrayList<String> s){
-        for(String sp : s){
-            System.out.println(sp);
-        }
-    }
-
-    private static String parseCommand(String str){
-        // *2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n
-        int i = 0;
-        int lenCommand = 0;
-        boolean flag = false;
-        for( ; i< str.length() ; i++){
-            if(!flag){
-                if(str.charAt(i)=='*'){
-                    flag = true;
-                }
-            }else{
-                if(str.charAt(i)>='0' && str.charAt(i)<= '9'){
-                    lenCommand = (lenCommand*10) + (str.charAt(i)-'0');
-                }else{
-                    break;
-                }
-            }
-
-        }
-        ArrayList<String> commands = new ArrayList<String>();
-//        System.out.println(lenCommand);
-        for(int j = 0 ; j < lenCommand ; j++) {
-            flag = false;
-            int len = 0;
-            for (; i < str.length(); i++) {
-                if (!flag) {
-                    if (str.charAt(i) == '$') {
-                        flag = true;
-                    }
-                } else {
-                    if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
-                        len = (len * 10) + (str.charAt(i) - '0');
-                    } else {
-                        break;
-                    }
-                }
-            }
-//            System.out.println(len);
-            i += 4;
-            String c = "";
-            for(int k = 0 ; k < len ; k++){
-                c += str.charAt(i);
-                i++;
-            }
-//            System.out.println(c);
-            commands.add(c);
-        }
-        String response = null;
-//        for(String s : commands){
-//            System.out.println(s);
-//        }
-        printArr(commands);
-        if(commands.get(0).toLowerCase().contentEquals("ping")){
-            response = "+PONG";
-        }else if(commands.get(0).toLowerCase().contentEquals("echo") ){
-            response = commands.get(1);
-        }
-
-        return response;
-
-    }
-
-
     private static void handleClient( Socket clientSocket) throws  IOException{
         PrintWriter out =  new PrintWriter(clientSocket.getOutputStream());
         BufferedReader in =  new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
         String str;
+        ArrayList<String> arr = new ArrayList<>();
+        int cnt = 0 ;
         while((str = in.readLine()) != null){
-            String response = parseCommand(str);
-            out.print(response);
-            out.flush();
+            arr.add(str);
+            if(arr.size() == 1){
+                cnt = 1 + 2*( Integer.parseInt(str.substring(1)));
+            }
+            if(arr.size() == cnt){
+                String cmd = arr.get(2);
+                if(cmd.toLowerCase().contentEquals("ping")){
+                    out.print("+PONG\r\n");
+                    out.flush();
+                }else if(cmd.toLowerCase().contentEquals("echo")){
+                    String output = arr.get(4);
+                    out.printf("$%d\r\n%s\r\n",output.length(),output);
+                    out.flush();
+                }
+                arr.clear();
+                cnt = 0;
+
+            }
         }
         clientSocket.close();
     }
