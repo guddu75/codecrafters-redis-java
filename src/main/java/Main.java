@@ -7,13 +7,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
-    private static void handleClient( Socket clientSocket) throws  IOException{
+    private static void handleClient( Socket clientSocket , DB database) throws  IOException{
         PrintWriter out =  new PrintWriter(clientSocket.getOutputStream());
         BufferedReader in =  new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
         String str;
         ArrayList<String> arr = new ArrayList<>();
         int cnt = 0 ;
-        DB database = new DB();
         while((str = in.readLine()) != null){
             arr.add(str);
             if(arr.size() == 1){
@@ -51,6 +50,7 @@ public class Main {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     System.out.println("Logs from your program will appear here!");
         ServerSocket serverSocket = null;
+        DB database = new DB();
 //        Socket clientSocket = null;
         int port = 6379;
         try {
@@ -62,7 +62,7 @@ public class Main {
                 Socket clientSocket = serverSocket.accept();
                 new Thread(() -> {
                     try{
-                        handleClient(clientSocket);
+                        handleClient(clientSocket , database);
                     }catch (IOException e){
                         System.out.println("IOException: " + e.getMessage());
                     }
