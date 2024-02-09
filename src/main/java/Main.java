@@ -30,8 +30,12 @@ public class Main {
                 }else if(cmd.toLowerCase().contentEquals("set")){
                     String key = arr.get(4);
                     String value = arr.get(6);
-                    Long ttl = Long.parseLong(arr.get(10));
-                    database.set(key,value,ttl);
+                    if(arr.size() > 6){
+                        Long ttl = Long.parseLong(arr.get(10));
+                        database.set(key,value,ttl);
+                    }else{
+                        database.set(key,value,0L);
+                    }
                     out.print("+OK\r\n");
                     out.flush();
                 }else if(cmd.toLowerCase().contentEquals("get")){
