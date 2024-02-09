@@ -30,7 +30,8 @@ public class Main {
                 }else if(cmd.toLowerCase().contentEquals("set")){
                     String key = arr.get(4);
                     String value = arr.get(6);
-                    database.set(key,value);
+                    Long ttl = Long.parseLong(arr.get(10));
+                    database.set(key,value,ttl);
                     out.print("+OK\r\n");
                     out.flush();
                 }else if(cmd.toLowerCase().contentEquals("get")){
@@ -54,7 +55,7 @@ public class Main {
     }
   public static void main(String[] args){
     // You can use print statements as follows for debugging, they'll be visible when running tests.
-//    System.out.println("Logs from your program will appear here!");
+    System.out.println("Logs from your program will appear here!");
         ServerSocket serverSocket = null;
         DB database = new DB();
 //        Socket clientSocket = null;
