@@ -18,7 +18,7 @@ public class Main {
             if(arr.size() == 1){
                 cnt = 1 + 2*( Integer.parseInt(str.substring(1)));
             }
-            System.out.println(cnt);
+//            System.out.println(cnt);
             if(arr.size() == cnt){
                 String cmd = arr.get(2);
                 if(cmd.toLowerCase().contentEquals("ping")){
@@ -31,7 +31,7 @@ public class Main {
                 }else if(cmd.toLowerCase().contentEquals("set")){
                     String key = arr.get(4);
                     String value = arr.get(6);
-                    if(arr.size() > 6){
+                    if(arr.size() > 7){
                         Long ttl = Long.parseLong(arr.get(10));
                         database.set(key,value,ttl);
                     }else{
