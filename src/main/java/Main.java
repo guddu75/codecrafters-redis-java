@@ -31,13 +31,19 @@ public class Main {
                     String key = arr.get(4);
                     String value = arr.get(6);
                     database.set(key,value);
-//                    out.print("OK\r\n");
-//                    out.flush();
+                    out.print("OK\r\n");
+                    out.flush();
                 }else if(cmd.toLowerCase().contentEquals("get")){
                     String key = arr.get(4);
                     String output = database.get(key);
-                    out.printf("$%d\r\n%s\r\n",output.length(),output);
-                    out.flush();
+                    if(output.contentEquals("null")){
+                        out.print("$-1\r\n");
+                        out.flush();
+                    }else{
+                        out.printf("$%d\r\n%s\r\n",output.length(),output);
+                        out.flush();
+                    }
+
                 }
                 arr.clear();
                 cnt = 0;
