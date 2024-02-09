@@ -18,6 +18,7 @@ public class Main {
             if(arr.size() == 1){
                 cnt = 1 + 2*( Integer.parseInt(str.substring(1)));
             }
+            System.out.println(cnt);
             if(arr.size() == cnt){
                 String cmd = arr.get(2);
                 if(cmd.toLowerCase().contentEquals("ping")){
