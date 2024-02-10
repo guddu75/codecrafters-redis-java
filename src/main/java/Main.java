@@ -6,8 +6,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+
 public class Main {
+
+    private static String dir = null;
+    private static String fileName = null;
+
+    private static String buildResponse(String s){
+        String res = "$";
+        res += String.valueOf(s.length());
+        res += "\r\n";
+        res += s;
+        res += "\r\n";
+        return res;
+    }
+
     private static void handleClient( Socket clientSocket , DB database) throws  IOException{
+
         PrintWriter out =  new PrintWriter(clientSocket.getOutputStream());
         BufferedReader in =  new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
         String str;
@@ -50,6 +65,20 @@ public class Main {
                         out.flush();
                     }
 
+                }else if(cmd.toLowerCase().contentEquals("config") && arr.get(4).toLowerCase().contentEquals("get")){
+                    String ans = "*2\r\n";
+                    if(arr.get(6).toLowerCase().contentEquals("dir")){
+
+                        ans += buildResponse("dir");
+                        ans += buildResponse(dir);
+
+                    }else if(arr.get(6).toLowerCase().contentEquals("dbfilename")){
+                        ans += buildResponse("dbfilename");
+                        ans += buildResponse(fileName);
+
+                    }
+                    out.print(ans);
+                    out.flush();
                 }
                 arr.clear();
                 cnt = 0;
@@ -61,6 +90,8 @@ public class Main {
   public static void main(String[] args){
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     System.out.println("Logs from your program will appear here!");
+    dir = args[1];
+    fileName = args[3];
         ServerSocket serverSocket = null;
         DB database = new DB();
 //        Socket clientSocket = null;
