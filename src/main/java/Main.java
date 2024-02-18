@@ -24,8 +24,8 @@ public class Main {
         out.print(s+"\r\n");
     }
 
-    private  static void  responseList(PrintWriter out , ArrayList<String> values){
-        out.print("*"+values.size()+"\r\n");
+    private  static void  responseList(PrintWriter out , String... values){
+        out.print("*"+values.length+"\r\n");
         for(String value : values){
             response(out,value);
         }
@@ -76,25 +76,17 @@ public class Main {
                     }
 
                 }else if(cmd.toLowerCase().contentEquals("config") && arr.get(4).toLowerCase().contentEquals("get")){
-                    ArrayList<String> darr = new ArrayList<>();
-                    darr.add(dir);
-                    darr.add(fileName);
-                    responseList(out,darr);
-//                    String ans = "*2\r\n";
-//                    if(arr.get(6).toLowerCase().contentEquals("dir")){
-//
-//                        ans += buildResponse("dir");
-//                        ans += buildResponse(dir);
-//
-//                    }else if(arr.get(6).toLowerCase().contentEquals("dbfilename")){
-//                        ans += buildResponse("dbfilename");
-//                        ans += buildResponse(fileName);
-//
-//                    }
-//                    out.print(ans);
+                    if(arr.get(6).toLowerCase().contentEquals("dir")){
+
+                        responseList(out,"dir",dir);
+
+                    }else if(arr.get(6).toLowerCase().contentEquals("dbfilename")){
+                        responseList(out,"dbfilename",fileName);
+
+                    }
                     out.flush();
                 }else if(cmd.toLowerCase().contentEquals("keys")){
-                    ArrayList<String> keys = database.getKeys();
+                    String[] keys = database.getKeys();
                     responseList(out,keys);
                     out.flush();
                 }

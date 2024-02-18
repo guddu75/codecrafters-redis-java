@@ -35,15 +35,9 @@ public class DB {
             return "null";
         }
     }
-    public ArrayList<String> getKeys(){
-        Set<String> keySet = this.db.keySet();
+    public String[] getKeys(){
+        String[] keys = this.db.keySet().toArray(new String[0]);
 
-        ArrayList<String> arr = new ArrayList<>();
-
-        for(String s : keySet){
-            arr.add(s);
-        }
-
-        return arr;
+        return keys;
     }
 }
