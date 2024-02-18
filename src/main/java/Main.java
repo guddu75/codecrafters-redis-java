@@ -124,13 +124,14 @@ public class Main {
                     getLength(in);
                     break;
                 }
-                System.out.println("skipped");
+//                System.out.println("skipped");
                 valueType = in.read(); // value-type
-                System.out.println("valueType=" + valueType);
+//                System.out.println("valueType=" + valueType);
                 lengthEncoding = getLength(in);
-                System.out.println("Length=" + lengthEncoding);
+//                System.out.println("Length=" + lengthEncoding);
                 byte[] bytes = in.readNBytes(lengthEncoding);
                 String key = new String(bytes);
+                System.out.println(key);
                 database.set(key , "star");
             }
 
