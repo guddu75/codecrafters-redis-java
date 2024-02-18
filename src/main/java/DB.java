@@ -1,8 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-
-
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class DB {
@@ -11,6 +10,10 @@ public class DB {
 
     public DB(){
         this.db = new HashMap<String,ValueOBJ>();
+    }
+
+    public void set(String key , String value){
+        set(key,value,Long.MAX_VALUE);
     }
 
     public void set(String key , String value , Long expiryTime){
@@ -31,5 +34,16 @@ public class DB {
         }else{
             return "null";
         }
+    }
+    public ArrayList<String> getKeys(){
+        Set<String> keySet = this.db.keySet();
+
+        ArrayList<String> arr = new ArrayList<>();
+
+        for(String s : keySet){
+            arr.add(s);
+        }
+
+        return arr;
     }
 }
