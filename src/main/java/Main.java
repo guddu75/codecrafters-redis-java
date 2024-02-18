@@ -168,20 +168,21 @@ public class Main {
             case 0 -> {
                 length = b&0b00111111;
             }
-            case 64 -> {
+            case 128 -> {
                 ByteBuffer buffer =   ByteBuffer.allocate(2);
                 buffer.put((byte) (b & 00111111));
                 buffer.put((byte) in.read());
                 buffer.rewind();
                 length = buffer.getShort();
             }
-            case 128 -> {
+            case 256 -> {
                 ByteBuffer buffer = ByteBuffer.allocate(4);
-                buffer.put(in.readNBytes(4));
+                buffer.put(b);
+                buffer.put(in.readNBytes(3));
                 buffer.rewind();
                 length = buffer.getInt();
             }
-            case 192 -> {
+            case 384 -> {
                 System.out.println("Special Type");
             }
         }
