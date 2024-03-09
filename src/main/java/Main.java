@@ -67,6 +67,7 @@ public class Main {
                 } else if (cmd.toLowerCase().contentEquals("get")) {
                     String key = arr.get(4);
                     String output = database.get(key);
+                    System.out.println(output);
                     if (output.contentEquals("null")) {
                         out.print("$-1\r\n");
                         out.flush();
