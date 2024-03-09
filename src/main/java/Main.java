@@ -61,6 +61,7 @@ public class Main {
                     } else {
                         database.set(key, value, 0L);
                     }
+                    System.out.println(database.get(key));
                     out.print("+OK\r\n");
                     out.flush();
                 } else if (cmd.toLowerCase().contentEquals("get")) {
